@@ -1,0 +1,8 @@
+/* ADHD Reading Helper - minimal styling to avoid breaking page layout */
+.bionic-reader-processed {
+  font-weight: inherit;
+}
+
+.bionic-reader-processed b {
+  font-weight: 700;
+}

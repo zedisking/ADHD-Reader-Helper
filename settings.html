@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD Reading Helper Settings</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --accent: #0f3460;
+      --highlight: #e94560;
+      --text: #eaeaea;
+      --muted: #a0a0a0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      min-width: 480px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      color: var(--highlight);
+    }
+    section {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    section h2 {
+      font-size: 1rem;
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .strength-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .strength-row label { flex: 0 0 120px; }
+    input[type="range"] {
+      flex: 1;
+      max-width: 200px;
+      accent-color: var(--highlight);
+    }
+    .strength-value {
+      font-weight: 600;
+      min-width: 1.5rem;
+    }
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+    }
+    .tag-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tag-item input {
+      accent-color: var(--highlight);
+    }
+    .tag-item label {
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .scan-btn {
+      background: var(--highlight);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .scan-btn:hover { opacity: 0.9; }
+    .scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hint { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .toggle-row input { accent-color: var(--highlight); }
+  </style>
+</head>
+<body>
+  <h1>ADHD Reading Helper Settings</h1>
+
+  <section>
+    <h2>General</h2>
+    <div class="toggle-row">
+      <input type="checkbox" id="enabled" checked>
+      <label for="enabled">Enable ADHD Reading Helper on pages</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Strength</h2>
+    <p class="hint">Higher strength bolds more of each word (1 = subtle, 5 = strong)</p>
+    <div class="strength-row">
+      <label for="strength">Strength:</label>
+      <input type="range" id="strength" min="1" max="5" value="3" step="1">
+      <span class="strength-value" id="strengthValue">3</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Default Excluded Tags</h2>
+    <p class="hint">Uncheck to apply the reading helper to these elements (checked = excluded)</p>
+    <div class="tag-grid" id="defaultTags"></div>
+  </section>
+
+  <section>
+    <h2>Page-Specific Tags</h2>
+    <p class="hint">Scan a page to see all tags used, then exclude or include as needed</p>
+    <button class="scan-btn" id="scanBtn">Scan current page for tags</button>
+    <div class="tag-grid" id="pageTags"></div>
+  </section>
+
+  <script src="settings.js"></script>
+</body>
+</html>

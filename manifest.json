@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "ADHD Reading Helper",
+  "version": "1.0.0",
+  "description": "Convert webpages, URLs, or files to Bionic Reading. Bold fixations help you read faster. Supports PDF, DOCX, ODT, TXT.",
+  "author": "Damien Cresswell",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "file:///*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    },
+    "default_title": "ADHD Reading Helper"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "file:///*"],
+      "js": ["bionic-core.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "options_page": "settings.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["reader.html", "lib/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

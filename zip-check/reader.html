@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD Reading Helper - Upload Document</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --accent: #0f3460;
+      --highlight: #e94560;
+      --text: #eaeaea;
+      --muted: #a0a0a0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+      color: var(--highlight);
+    }
+    .upload-zone {
+      border: 2px dashed var(--accent);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 1.5rem;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--highlight);
+      background: rgba(233, 69, 96, 0.08);
+    }
+    .upload-zone input { display: none; }
+    .upload-zone p { margin: 0.5rem 0; color: var(--muted); font-size: 0.9rem; }
+    .upload-zone .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--highlight);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .upload-zone .btn:hover { opacity: 0.9; }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .controls label { font-size: 0.9rem; }
+    .controls input[type="range"] { accent-color: var(--highlight); }
+    .content {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+    .content.document-content {
+      background: #fff;
+      color: #1a1a2e;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .content.document-content h1, .content.document-content h2, .content.document-content h3,
+    .content.document-content h4, .content.document-content h5, .content.document-content h6 {
+      color: #0f3460;
+    }
+    .content.document-content td, .content.document-content th {
+      border-color: #ccc;
+    }
+    .content.document-content .pdf-text-overlay {
+      color: #1a1a2e;
+    }
+    .content b { font-weight: 700; }
+    .content p { margin: 0 0 1rem; }
+    .content h2, .content h3 { margin: 1.5rem 0 0.75rem; color: var(--highlight); }
+    .error { color: #e94560; margin: 1rem 0; }
+    .muted { color: var(--muted); }
+    .loading { color: var(--muted); }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover { color: var(--highlight); }
+    .content table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    .content td, .content th { border: 1px solid var(--accent); padding: 0.5rem 0.75rem; text-align: left; }
+    .content ul, .content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+    .content li { margin: 0.25rem 0; }
+    .content h1 { font-size: 1.75rem; margin: 1.5rem 0 0.75rem; }
+    .content h2 { font-size: 1.4rem; margin: 1.25rem 0 0.5rem; }
+    .content h3, .content h4, .content h5, .content h6 { font-size: 1.1rem; margin: 1rem 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <a href="#" class="back-link" id="backLink">← Back to extension</a>
+  <h1>Upload Document</h1>
+  <p class="muted">Supports TXT, PDF, DOCX, ODT</p>
+
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" id="fileInput" accept=".txt,.pdf,.docx,.odt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text">
+    <p>Drag and drop a file here, or</p>
+    <button type="button" class="btn" id="chooseBtn">Choose file</button>
+  </div>
+
+  <div class="controls" id="controls" style="display: none;">
+    <label for="strength">Strength:</label>
+    <input type="range" id="strength" min="1" max="5" value="3" step="1">
+    <span id="strengthVal">3</span>
+  </div>
+
+  <div class="content" id="content"></div>
+
+  <script src="bionic-core.js"></script>
+  <script src="lib/jszip.min.js"></script>
+  <script src="lib/mammoth.min.js"></script>
+  <script type="module" src="reader.js"></script>
+</body>
+</html>
